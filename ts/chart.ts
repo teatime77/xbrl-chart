@@ -1,9 +1,6 @@
 declare var Chart:any;
 declare var Plotly:any;
 
-// https://stackoverflow.com/questions/39871319/automatic-colors-assignment-in-chart-js-2-x-doesnt-work-anymore-used-to-work-i
-declare var palette:any;
-
 let addChartDlg : HTMLDialogElement;
 let addChartSel : HTMLSelectElement;
 
@@ -234,8 +231,6 @@ class LineChart extends MyChart {
 
         df = joinTable(df, selection, this.titles);
 
-        // let colors = palette('tol', selection.length).map(function(hex:any) { return '#' + hex; });
-
         let traces = [];
         for(let code of selection){
             let tbl = df.selectValue('EDINETコード', code);
@@ -295,15 +290,14 @@ class ScatterChart extends MyChart {
 
         this.categoryTbls = selectedCategories.map(name => df.selectValue('業種', name));
 
-        let colors = palette('tol', selectedCategories.length).map(function(hex:any) { return '#' + hex; });
-
         let data: any[] = [];
         for(let [idx, [category_name, df2]] of zip(selectedCategories, this.categoryTbls).entries() ){
             let xs = df2.column(this.titles[0]);
             let ys = df2.column(this.titles[1]);
             let names = df2.column('会社名');
             let value = { x: xs, y: ys, text: names, type: 'scatter', name: category_name, hoverinfo: 'text+x+y',
-                mode: 'markers', marker: {color: colors[idx], size: 5} };
+                mode: 'markers', 
+            };
             
             data.push(value);
         }
