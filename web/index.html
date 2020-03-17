@@ -54,7 +54,9 @@
 <span id="msg" class="msg"></span>
 <span style="height: 20px;">&nbsp;</span>
 <h1 style="text-align: center; color: mediumblue;">財務分析のサンプルアプリ</h1>
-<p style="text-align: center; "><span style="text-align: center;">このアプリの説明は、 <a href="https://qiita.com/teatime77/items/3ed6d4cd27f6440e163a">こちらのQiitaの記事</a> をご覧ください。</span></p>
+<p style="text-align: center; "><span style="text-align: center;">このアプリの説明は、 <a href="https://qiita.com/teatime77/items/3ed6d4cd27f6440e163a">こちらのQiitaの記事</a> をご覧ください。</span>
+    <button onclick="helpDlg.showModal()">ヘルプ</button>
+</p>
 
 <p style="text-align: center; "><button id="category-btn" onclick="showCategoryDlg()" style="display: none;" ><span class="big-button">業種を指定</span></button></p>
 
@@ -90,6 +92,20 @@
     <img class="arrow" src="img/resize.png" draggable="true" style="cursor: nwse-resize;" /> <!-- ⇲ -->
     <button class="close" style="width: 24px; height: 24px;"><img src="img/close.png" /> </button><!-- × -->
 </div>
+
+<dialog id="help-dlg">
+    散布図のグラフの右上にマウスを持っていくと以下のようにボタンが4個表示されます。
+    <ul>
+        <li>範囲指定ボタンをクリックしてからマウスをドラッグすると、ドラッグされた範囲の会社が選択されます。<br/>
+            この状態で別のグラフを追加すると、新しいグラフには選択された会社が表示されます。<br/>
+            &nbsp;
+        </li>
+        <li>表示位置移動ボタンをクリックしてからマウスをドラッグした場合は、グラフの表示位置が移動します。</li>
+    </ul>
+    <img src="img/scatter.png" />
+    <br/><br/>
+    <button onclick="helpDlg.close()">閉じる</button>
+</dialog>    
     
 </body>
 </html>

@@ -16,6 +16,7 @@ let 集計_titles: string[];
 let categoryDlg : HTMLDialogElement;
 let categorySel : HTMLSelectElement;
 let selectedCategories: string[];
+let helpDlg : HTMLDialogElement;
 
 class Table{
     titles: string[];
@@ -391,9 +392,11 @@ function setUI() {
     addChartSel = getDom('titles-sel') as HTMLSelectElement;
     categoryDlg = getDom("category-dlg") as HTMLDialogElement;
     categorySel = getDom("categories-sel") as HTMLSelectElement;
+    helpDlg = getDom('help-dlg') as HTMLDialogElement;
 
     dialogPolyfill.registerDialog(addChartDlg);
     dialogPolyfill.registerDialog(categoryDlg);
+    dialogPolyfill.registerDialog(helpDlg);
 
     getDom('okDlg')!.addEventListener('click', function() {
         let cnt = Array.from(addChartSel.selectedOptions).length;
