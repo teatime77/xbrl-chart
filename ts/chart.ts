@@ -140,22 +140,6 @@ class MyChart {
         return charts[i - 1].getSelection();
     }
 
-    getCompanyCount(): number {
-        return this.getSelection().length;
-/*        
-        let selection = this.getSelection();
-        if(selection.length != 0){
-            return selection.length;
-        }
-
-        console.assert(charts.length != 0 && charts[0] instanceof ScatterChart);
-        let scatter = charts[0] as ScatterChart;
-
-        let sum = scatter.categoryTbls.map(x => x.count()).reduce((x, y) => x + y, 0);
-        return sum;
-*/
-    }
-
     static makeChart(){
         let chart: MyChart;
 
