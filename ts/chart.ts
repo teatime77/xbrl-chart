@@ -136,12 +136,24 @@ class MyChart {
 
     getSelection() : string[] {
         let i = charts.indexOf(this);
-        if(i == 0){
-            return [];
+        console.assert(i != 0);
+        return charts[i - 1].getSelection();
+    }
+
+    getCompanyCount(): number {
+        return this.getSelection().length;
+/*        
+        let selection = this.getSelection();
+        if(selection.length != 0){
+            return selection.length;
         }
-        else{
-            return charts[i - 1].getSelection();
-        }
+
+        console.assert(charts.length != 0 && charts[0] instanceof ScatterChart);
+        let scatter = charts[0] as ScatterChart;
+
+        let sum = scatter.categoryTbls.map(x => x.count()).reduce((x, y) => x + y, 0);
+        return sum;
+*/
     }
 
     static makeChart(){
@@ -166,11 +178,6 @@ class MyChart {
             }
             chart = new LineChart(titles);
 
-            chart.drawChart(); 
-            break;
-
-        case ChartType.Table:
-            chart = new TableChart(titles);
             chart.drawChart(); 
             break;
         }
@@ -284,16 +291,23 @@ class ScatterChart extends MyChart {
     }
 
     getSelection() : string[] {
-        if(this.selection.length == 0){
-            return super.getSelection();
+        if(this.selection.length != 0){
+            return this.selection;
+        }
+
+        
+        if(charts[0] == this){
+
+            return selectedCategories.map(name => 業種[name]).flat();
         }
         else{
-            return this.selection;
+
+            return super.getSelection();
         }
     }
 
     drawChart(){
-        let df = selectData(直近集計, super.getSelection(), this.titles);
+        let df = selectData(直近集計, this.getSelection(), this.titles);
 
         this.categoryTbls = selectedCategories.map(name => df.selectValue('業種', name));
 

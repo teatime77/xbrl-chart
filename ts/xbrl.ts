@@ -250,7 +250,7 @@ function parseCSV(text: string, skiprows = 0, delimiter = ','){
 
 function downloadData(){
     msg("テータをダウンロードしています。");
-    fetchText("financial_indicators.csv")
+    fetchText("data/summary-join.csv")
     .then((text) => {
         msg("テータをダウンロードしています。■");
 
@@ -281,7 +281,7 @@ function downloadData(){
         setCategoryDlg();
 
         msg("テータをダウンロードしています。■■");
-        return fetchText("summary-0.csv");
+        return fetchText("data/summary-0.csv");
     })
     .then((text) => {
         msg("テータをダウンロードしています。■■■");
@@ -289,7 +289,7 @@ function downloadData(){
         提出日時点 = 提出日時点.selectValue("報告書略号", "asr");
     
         msg("テータをダウンロードしています。■■■■");
-        return fetchText("summary-1.csv");
+        return fetchText("data/summary-1.csv");
     })
     .then((text) => {
         msg("テータをダウンロードしています。■■■■■");
@@ -306,7 +306,7 @@ function downloadData(){
         時点_titles = 時点.titles.filter(x => ! ['EDINETコード', '会計期間終了日', '報告書略号', 'コンテキスト'].includes(x));
 
         msg("テータをダウンロードしています。■■■■■■");
-        return fetchText("summary-2.csv");
+        return fetchText("data/summary-2.csv");
     })    
     .then((text) => {
         msg("テータをダウンロードしています。■■■■■■■");
@@ -446,8 +446,9 @@ function addChart(e: ChartType){
     let msg = "";
 
     if(e != ChartType.Scatter){
-        let sel_len = charts[charts.length - 1].getSelection().length;
-        if(sel_len == 0 || 20 < sel_len){
+        let sum = charts[charts.length - 1].getSelection().length;
+        console.log(`会社数: ${sum}`);
+        if(20 < sum){
 
             alert("グラフに表示する会社数が多すぎます。\n\n散布図で表示する会社を選択してください。")
             return;
