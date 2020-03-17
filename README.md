@@ -3,7 +3,7 @@ XBRLから作った決算書データをブラウザーでグラフ表示しま�
 
 ## 実行手順
 
-### 1.1: gitでソースを取得します。
+### 1. **gitでソースを取得します。**
 
 適当なフォルダーにソースをダウンロードします。
 
@@ -14,38 +14,40 @@ git clone https://github.com/teatime77/xbrl-chart.git
 以下では **XBRL-HOME** というフォルダーにダウンロードしたとして説明します。
 
 
-### 1.2: TypeScriptをコンパイルします。
+### 2. **TypeScriptをコンパイルします。**
 
 ```bash
 cd XBRL-HOME
 tsc -p ts
 ```
 
-### 1.3: CSVファイルを取得します。
+**XBRL-HOME/web/data** にコンパイルされたJavaScriptが入ります。
 
-以下のURLからEDINETのタクソノミが入ったファイルをダウンロードして解凍します。
-[http://lkzf.info/xbrl/data/summary-0.csv](http://lkzf.info/xbrl/data/summary-0.csv)
+### 3. **CSVファイルを取得します。**
 
-[http://lkzf.info/xbrl/data/summary-1.csv](http://lkzf.info/xbrl/data/summary-1.csv)
+以下の4個のCSVファイルをダウンロードします。
 
-[http://lkzf.info/xbrl/data/summary-2.csv](http://lkzf.info/xbrl/data/summary-2.csv)
+* [http://lkzf.info/xbrl/data/summary-0.csv](http://lkzf.info/xbrl/data/summary-0.csv)
+* [http://lkzf.info/xbrl/data/summary-1.csv](http://lkzf.info/xbrl/data/summary-1.csv)
+* [http://lkzf.info/xbrl/data/summary-2.csv](http://lkzf.info/xbrl/data/summary-2.csv)
+* [http://lkzf.info/xbrl/data/summary-join.csv](http://lkzf.info/xbrl/data/summary-join)
 
-[http://lkzf.info/xbrl/data/summary-join.csv](http://lkzf.info/xbrl/data/summary-join)
+ダウンロードしたファイルを **XBRL-HOME/web/data** の下に入れます。
 
-ダウンロードしを **XBRL-HOME/web/data** の下に入れます。
 以下のようなフォルダー構成になります。
 
 ```bash
 XBRL-HOME - ts
           - web - index.html
+                - js
                 - data - summary-0.csv
                        - summary-1.csv
                        - summary-2.csv
                        - summary-join.csv
 ```
 
-### 1.4 アプリを実行します。
+### 4. **アプリを実行します。**
 
-XBRL-HOME/web/index.html をブラウザでウェブで開くと、アプリの画面が表示されます。
+XBRL-HOME/web/index.html をブラウザで開くとアプリが表示されます。
 
 ※ ajaxでローカルファイルを読むので Chrome の場合はローカルサーバーが必要です。
