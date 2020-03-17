@@ -50,4 +50,6 @@ XBRL-HOME - ts
 
 **XBRL-HOME/web/index.html** をブラウザで開くとアプリが表示されます。
 
-※ ajaxでローカルファイルを読むので Chrome の場合はローカルサーバーが必要です。
+ChromeとFireFoxで動作を確認しています。
+
+※ ajaxを使ってCSVファイルを読むので、ローカルサーバー経由で **index.html** を開く必要があります。
