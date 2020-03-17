@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>財務分析のサンプルアプリ</title>
+<link href="dialog-polyfill/dialog-polyfill.css" rel="stylesheet">
+<script type="text/javascript" src="dialog-polyfill/dialog-polyfill.js"></script>
+<script type="text/javascript" src="palette.js/palette.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript" src="js/xbrl.js"></script>
+<script type="text/javascript" src="js/chart.js"></script>
+<style type="text/css">
+.big-button {
+    font-size: large;
+    color: mediumblue;
+}
+.container {
+    display: grid;
+    grid-template-rows: 1fr 24px;
+    grid-template-columns: 1fr 24px;
+}
+
+.chart_class {
+    grid-row: 1 /3;
+    grid-column: 1 / 2;
+}
+
+.arrow {
+    grid-row: 3;
+    grid-column: 2;
+}
+
+.close {
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.msg {
+    position: fixed; 
+    left: 0; 
+    top: 0; 
+    margin-top: 10px; 
+    z-index: 10;
+    display: inline-block; 
+    width: 100%; 
+    text-align: center; 
+    color:mediumblue; 
+    background-color: beige;
+    font-size: large;
+}
+
+</style>
+</head>
+<body onload="bodyOnLoad()" style="background-color:floralwhite;">
+<span id="msg" class="msg"></span>
+<span style="height: 20px;">&nbsp;</span>
+<h1 style="text-align: center; color: mediumblue;">財務分析のサンプルアプリ</h1>
+<p style="text-align: center; "><span style="text-align: center;">このアプリの説明は、 <a href="https://qiita.com/teatime77/items/3ed6d4cd27f6440e163a">こちらのQiitaの記事</a> をご覧ください。</span></p>
+
+<p style="text-align: center; "><button id="category-btn" onclick="showCategoryDlg()" style="display: none;" ><span class="big-button">業種を指定</span></button></p>
+
+
+<div id="chart-flex" style="display: flex; flex-wrap: wrap; align-items:flex-start;"></div>
+<br/>
+<div id="add-chart-div" style="display: none; text-align: center;">
+    <button onclick="addChart(ChartType.Scatter)"><span class="big-button">散布図を追加</span></button>
+    <button onclick="addChart(ChartType.Bar)"><span class="big-button">棒グラフを追加</span></button>
+    <button onclick="addChart(ChartType.Line)"><span class="big-button">折れ線グラフを追加</span></button>
+</div>
+
+<dialog id="add-chart-dlg">
+    <span id="add-chart-msg"></span><br/>
+    <br/>
+    <select id="titles-sel" size="20" multiple></select>
+    <br/><br/>
+    <button id="okDlg">ＯＫ</button>&nbsp;&nbsp;&nbsp;
+    <button id="cancelDlg">キャンセル</button>
+</dialog>    
+
+<dialog id="category-dlg">
+    <span>業種を選択してください。 ( 複数選択可 )</span><br/>
+    <br/>
+    <select id="categories-sel" size="20" multiple></select>
+    <br/><br/>
+    <button onclick="okCategoryDlg()">ＯＫ</button>&nbsp;&nbsp;&nbsp;
+    <button onclick="categoryDlg.close()">キャンセル</button>
+</dialog>    
+
+<div class="container" id="chart-template" style="display:none; border-style: ridge; border-width: 4px;">
+    <div class="chart_class" style="width: 500px; height: 500px;"></div>
+    <img class="arrow" src="img/resize.png" draggable="true" style="cursor: nwse-resize;" /> <!-- ⇲ -->
+    <button class="close" style="width: 24px; height: 24px;"><img src="img/close.png" /> </button><!-- × -->
+</div>
+    
+</body>
+</html>
