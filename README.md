@@ -1,4 +1,4 @@
-# xbrl-chart
+# XBRL Chart
 XBRLから作った決算書データをブラウザーでグラフ表示します。
 
 ## 実行手順
@@ -21,7 +21,7 @@ cd XBRL-HOME
 tsc -p ts
 ```
 
-**XBRL-HOME/web/data** にコンパイルされたJavaScriptが入ります。
+**XBRL-HOME/web/js** にコンパイルされたJavaScriptが入ります。
 
 ### 3. **CSVファイルを取得します。**
 
@@ -30,7 +30,7 @@ tsc -p ts
 * [http://lkzf.info/xbrl/data/summary-0.csv](http://lkzf.info/xbrl/data/summary-0.csv)
 * [http://lkzf.info/xbrl/data/summary-1.csv](http://lkzf.info/xbrl/data/summary-1.csv)
 * [http://lkzf.info/xbrl/data/summary-2.csv](http://lkzf.info/xbrl/data/summary-2.csv)
-* [http://lkzf.info/xbrl/data/summary-join.csv](http://lkzf.info/xbrl/data/summary-join)
+* [http://lkzf.info/xbrl/data/summary-join.csv](http://lkzf.info/xbrl/data/summary-join.csv)
 
 ダウンロードしたファイルを **XBRL-HOME/web/data** の下に入れます。
 
@@ -48,6 +48,6 @@ XBRL-HOME - ts
 
 ### 4. **アプリを実行します。**
 
-XBRL-HOME/web/index.html をブラウザで開くとアプリが表示されます。
+**XBRL-HOME/web/index.html** をブラウザで開くとアプリが表示されます。
 
 ※ ajaxでローカルファイルを読むので Chrome の場合はローカルサーバーが必要です。
