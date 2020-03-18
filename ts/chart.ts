@@ -41,7 +41,6 @@ class MyChart {
     arrowX: number = NaN;
     arrowY: number = NaN;
 
-
     constructor(titles: string[]){
         charts.push(this);
         this.titles = titles;
@@ -78,7 +77,6 @@ class MyChart {
             getDom("add-chart-div").style.display = "none";
         }
     }
-
 
     dragStart = (ev: DragEvent)=>{
         ev.dataTransfer!.effectAllowed = "move";
@@ -213,23 +211,12 @@ class LineChart extends MyChart {
         super(titles);
     }
 
-
     drawChart(){
         let selection = this.getSelection();
 
         let title = this.titles[0];
 
-        let df: Table;
-        if(時点_titles.includes(title)){
-
-            df = 時点.selectValue("コンテキスト", "当期連結時点");
-        }
-        else{
-            console.assert(期間_titles.includes(title));
-            df = 期間.selectValue("コンテキスト", "当期連結期間");
-        }
-
-        df = joinTable(df, selection, this.titles);
+        let df = joinTable(集計, selection, this.titles);
 
         let traces = [];
         for(let code of selection){

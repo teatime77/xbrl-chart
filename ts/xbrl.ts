@@ -1,16 +1,11 @@
 declare var dialogPolyfill: any;
 
 let msgTimer : number|null = null;
-let 提出日時点: Table;
-let 時点: Table;
-let 期間: Table;
 let 会社名: { [key: string]: string; };
 let 業種: { [key: string]: string[]; };
 let 集計: Table;
 let 直近集計: Table;
 
-let 時点_titles: string[];
-let 期間_titles: string[];
 let 集計_titles: string[];
 
 let categoryDlg : HTMLDialogElement;
@@ -226,13 +221,13 @@ function fetchText(path: string, encoding: string|undefined = undefined) {
     });
 }
 
-function parseCSV(text: string, skiprows = 0, delimiter = ','){
+function parseCSV(text: string){
     let lines = text.split('\n').filter(x => x != undefined && x.length != 0);
 
-    let titles = lines[skiprows].split(delimiter);
+    let titles = lines[0].split(',');
     
-    lines = lines.slice(skiprows + 1);
-    let rows = lines.map((x)=> (x[0] == '"' ? JSON.parse('[' + x + ']') : x.split(delimiter) ) );
+    lines = lines.slice(1);
+    let rows = lines.map((x)=> (x[0] == '"' ? JSON.parse('[' + x + ']') : x.split(',') ) );
 
     let arrays : Array<Array<any>> = [];
     for (const [col, element] of titles.entries()) {
@@ -256,16 +251,11 @@ function downloadData(){
         msg("テータをダウンロードしています。■");
 
         集計 = parseCSV(text);
-
-        集計.setFloat([ 
-            '資産', '流動資産', '流動負債', '純資産', '１株当たり純資産', 
-            '売上高', '売上原価', '販売費及び一般管理費', '営業利益', '経常利益', '純利益', '１株当たり純利益',
-            '前期売上高', '前期純利益',
-            '平均年齢', '平均勤続年数', '平均年間給与' ]);
     
         let codes = 集計.column('EDINETコード');
 
         集計_titles = 集計.titles.filter(x => ! ['EDINETコード', '提出日', '会計期間終了日', '会社名', '業種'].includes(x));
+        集計.setFloat(集計_titles);
 
         直近集計 = 集計.filter(i => i == 集計.count() - 1 || codes[i] != codes[i + 1] );
     
@@ -280,51 +270,6 @@ function downloadData(){
         }
 
         setCategoryDlg();
-
-        msg("テータをダウンロードしています。■■");
-        return fetchText("data/summary-0.csv");
-    })
-    .then((text) => {
-        msg("テータをダウンロードしています。■■■");
-        提出日時点 = parseCSV(text);
-        提出日時点 = 提出日時点.selectValue("報告書略号", "asr");
-    
-        msg("テータをダウンロードしています。■■■■");
-        return fetchText("data/summary-1.csv");
-    })
-    .then((text) => {
-        msg("テータをダウンロードしています。■■■■■");
-        時点 = parseCSV(text);
-        時点 = 時点.selectValue("報告書略号", "asr");
-        時点.rename({ 
-            '１株当たり純資産額': '１株当たり純資産',
-            '平均年齢（年）'    : '平均年齢',
-            '平均勤続年数（年）': '平均勤続年数',
-        });
-        時点.setFloat([ '資産', '流動資産', '流動負債', '純資産', '１株当たり純資産']);
-    
-
-        時点_titles = 時点.titles.filter(x => ! ['EDINETコード', '会計期間終了日', '報告書略号', 'コンテキスト'].includes(x));
-
-        msg("テータをダウンロードしています。■■■■■■");
-        return fetchText("data/summary-2.csv");
-    })    
-    .then((text) => {
-        msg("テータをダウンロードしています。■■■■■■■");
-        期間 = parseCSV(text);
-        期間 = 期間.selectValue("報告書略号", "asr");
-        期間.rename({ 
-            '売上総利益又は売上総損失（△）'            :'売上総利益', 
-            '経常利益又は経常損失（△）'                : '経常利益', 
-            '営業利益又は営業損失（△）'                : '営業利益',
-            '当期純利益又は当期純損失（△）'            :'純利益', 
-            '税引前当期純利益又は税引前当期純損失（△）':'税引前純利益', 
-            '１株当たり当期純利益又は当期純損失（△）'  :'１株当たり純利益',
-            '現金及び現金同等物の増減額（△は減少）'    :'現金及び現金同等物の増減' 
-        });
-        期間.setFloat(['売上高', '売上原価', '販売費及び一般管理費', '営業利益', '経常利益', '純利益', '１株当たり純利益']);
-
-        期間_titles = 期間.titles.filter(x => ! ['EDINETコード', '会計期間終了日', '報告書略号', 'コンテキスト'].includes(x));
 
         msg("業種を指定してください。");
         getDom("category-btn").style.display = "inline-block";
@@ -475,15 +420,7 @@ function addChart(e: ChartType){
 
     addChartSel.innerHTML = "";
 
-    let titles;
-    if(e == ChartType.Line){
-        titles = 時点_titles.concat(期間_titles);
-    }
-    else{
-        titles = 集計_titles;
-    }
-
-    for(let title of titles){
+    for(let title of 集計_titles){
         let opt = document.createElement("option");
         opt.innerText = title;
         addChartSel.appendChild(opt);
