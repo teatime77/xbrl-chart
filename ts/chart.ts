@@ -57,6 +57,7 @@ class MyChart {
         this.arrow.ondragstart = this.dragStart;
         this.arrow.ondragend   = this.dragEnd;
 
+        getDom('category-btn').style.display = "none";
         getDom("chart-flex")!.appendChild(this.divTempl);
     }
 
@@ -74,6 +75,7 @@ class MyChart {
         }
 
         if(charts.length == 0){
+            getDom('category-btn').style.display = "inline-block";
             getDom("add-chart-div").style.display = "none";
         }
     }
